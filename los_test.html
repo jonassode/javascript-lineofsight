@@ -1,0 +1,89 @@
+<html>
+<head>
+	<script type='text/javascript' src='range.js' ></script>
+
+</head>
+<body>
+	<font face="Monospace">
+	<div id="test_area">a </div>
+
+	<table>
+		<tr>
+			<td>&nbsp;</td>
+			<td>
+				<button onclick="move_player(LOS.p(-1,0));" >up</button>
+			</td>
+			<td>&nbsp;</td>
+		</tr>
+                <tr>
+                        <td>
+                                <button onclick="move_player(LOS.p(0,-1));" >left</button>
+                        </td>
+                        <td>
+                                <button onclick="move_player(LOS.p(1,0));" >down</button>
+                        </td>
+                        <td>
+                                <button onclick="move_player(LOS.p(0,1));" >right</button>
+                        </td>
+                </tr>	
+	</table>
+	
+	<br/>
+	<div id="text_area">b </div>
+	</font>
+	<script>
+
+		function move_player(p){
+			if ( (player.row + p.row) >= 0 && (player.row + p.row) < matrix.length ){
+				if ( matrix[player.row+p.row][player.col+p.col] === '.' ){
+					matrix[player.row][player.col] = '.';
+					player.row = player.row + p.row;
+					player.col = player.col + p.col;
+					draw_map(matrix,player);
+				}
+			}
+		}
+
+		function draw_map(matrix, player){
+	                los = LOS.calculate_line_of_sight(matrix, player.row, player.col, 5);
+        	        var text = "";
+                	for( row = 0; row < height; row++) {
+                        	for( col = 0; col < width; col++) {
+					if ( los[row][col] === "1"){
+						text = text + "<SPAN style='background-color:yellow'>";
+						text = text + matrix[row][col];
+						text = text + "</span>";
+					} else if (los[row][col] === "0"){
+						text = text + "<SPAN style='background-color:silver'>";
+						text = text + "&nbsp;"
+						text = text + "</span>";
+					} else if (row === player.row && col === player.col){
+                                                text = text + "<SPAN style='background-color:yellow'>";
+						text = text + "@"
+                                                text = text + "</span>";
+					} else {
+						text = text + "-";
+					}
+	                        }
+        	                text = text + "<br>";
+	                }
+
+        	        document.getElementById('test_area').innerHTML = text;
+			document.getElementById('text_area').innerHTML = LOS.LOG;
+
+		}
+		
+
+		var player = { row:10, col:10 }
+		var width = 20;
+		var height = 20;
+		var matrix = LOS.create_matrix(width, height);
+		
+		draw_map(matrix, player);
+	</script>
+
+
+</body>
+<html>
+
+
