@@ -2,7 +2,7 @@
 var jslos = {
 
 	/*
-	* @param {Array}	A list of the tiles that you have seen
+	* @param {Array}	A list of the tiles that you have 
 	*/
 	viewed_tiles: new Array(),
 
@@ -18,11 +18,9 @@ var jslos = {
 	CENTER: 2,
 
 	/*
-	* Parameters for the input array
-	* 
-	* BLOCKER: indicates that a the tile blocks the view of the tiles behind it
+	* blocker_values: list of all blocker values 
 	*/
-	BLOCKER: 8,
+	blocker_values: new Array(),
 
 	/**
 	* Creates and returns a Matrix.
@@ -114,7 +112,7 @@ var jslos = {
 
 					//this.LOG = this.LOG + "(" + ring + "," + cell + ")    " + start + " - " + stop + " visible:" + visible + " blocking: " + blocking + "<br/>";
 					//this.LOG = this.LOG + shadow_array + "<br/><br/>";
-					//this.LOG = this.viewed_tiles;
+					//this.LOG = this.blocker_values;
 
 				}
 			}
@@ -214,11 +212,21 @@ var jslos = {
 	* @return {Boolean}		true/false based on whether the cell value is a BLOCKER or not
 	*/
 	is_blocking: function(value){
-		if ( value === this.BLOCKER ){
+		if ( value in this.oc(this.blocker_values) ){
 			return true;
 		} else {
 			return false;
 		}
+	},
+
+	oc: function(arr)
+	{
+	  var o = {};
+	  for(var i=0;i<arr.length;i++)
+	  {
+	    o[arr[i]]='';
+	  }
+	  return o;
 	},
 
 	/**

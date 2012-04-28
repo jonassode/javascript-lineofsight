@@ -29,7 +29,7 @@
 	</table>
 	
 	<br/>
-	<div id="text_area">  </div>
+	<div id="text_area">b  </div>
 	</font>
 	<script>
 
@@ -42,8 +42,10 @@
 				        matrix[row] = new Array(width);
 					for ( col = 0; col < width; col++){
 						matrix[row][col] = '.';
-						if ( Math.floor((Math.random()*10)+1) > 7 ){
+						if ( Math.floor((Math.random()*10)+1) > 8 ){
 							matrix[row][col] = '#';
+						} else if ( Math.floor((Math.random()*10)+1) > 9 ) {
+							matrix[row][col] = '&';
 						}
 					}
 				}
@@ -92,7 +94,7 @@
 	                }
 
         	        document.getElementById(div_name).innerHTML = text;
-			//document.getElementById('text_area').innerHTML = jslos.LOG;
+			document.getElementById('text_area').innerHTML = jslos.LOG;
 
 		}
 		
@@ -101,7 +103,8 @@
 		var width = 20;
 		var height = 20;
 		var matrix = create_matrix(width, height);
-		jslos.BLOCKER = "#";
+		jslos.blocker_values.push("#");
+		jslos.blocker_values.push("&");
 		
 		draw_map(matrix, player, "test_area", true);
 	</script>
