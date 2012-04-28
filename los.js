@@ -1,11 +1,29 @@
 
 var jslos = {
 
+	/*
+	* Parameters for the returned line-of-sight array
+	* 
+	* VISIBLE indicates that a tile is visible
+	* BLOCKED indicates that a tile is not visible
+	*/ 
 	VISIBLE: 1,
 	BLOCKED: 0,
-	EMPTY: 9,
+
+	/*
+	* Parameters for the input array
+	* 
+	* BLOCKER: indicates that a the tile blocks the view of the tiles behind it
+	*/
 	BLOCKER: 8,
 
+	/**
+	* Creates and returns a Matrix.
+	*
+	* @param {Integer} width	The width of the new matrix.
+	* @param {Integer} height	The height of the new matrix.
+	* @return {Array[Array]}	Returns a matrix.
+	*/
 	create_matrix: function(width, height) {
 
 		        var matrix = new Array(height);
@@ -14,14 +32,22 @@ var jslos = {
 		        for( row = 0; row < height; row++) {
 		                matrix[row] = new Array(width);
 				for ( col = 0; col < width; col++){
-					matrix[row][col] = this.EMPTY;
+					matrix[row][col] = null;
 				}
 		        }
 
 			return matrix;
-
 	},
 
+	/**
+	* Calculates the line of sight and returns a new matrix with the calculated line-of-sight.
+	*
+	* @param {Array[Array]} matrix	The matrix which line-of-sight should be calculated on.
+	* @param {Integer} row		The row of the center tile.
+	* @param {Integer} col		The col of the center tile.
+	* @param {Integer} rings	The number of rings that should be counted.
+	* @return {Array[Array]}   	Returns a matrix with the calculated line-of-sight.
+	*/
 	calculate_line_of_sight: function(matrix, row, col, rings){
 		var los_matrix = this.create_matrix(matrix.length, matrix[0].length);
 
@@ -82,6 +108,15 @@ var jslos = {
 		return los_matrix;
 	},
 
+	/**
+	* Updates the shadow array object with new "shadows".
+	* A shadow is a blocked area
+	*
+	* @param {Double} start		The start of the new shadowed area
+	* @param {Double} stop		The end of the new shadowed area
+	* @param {Array} shadow_array	The shadow array object that will be updated
+	* @return {void}
+	*/
 	update_arch: function(start, stop, shadow_array){
 		var updated = false;
 		for ( i = 0; i < shadow_array.length; i = i + 2){
@@ -104,6 +139,17 @@ var jslos = {
 		}
 	},
 
+
+	/**
+	* Checks if a special area is Visible
+	* This method is used for the areas which are across the "gap" of the arc. 
+	* Example start = 350 and stop = 10
+	*
+	* @param {Double} start		The start of the area
+	* @param {Double} stop		The end of the area
+	* @param {Array} shadow_array	The shadow array object 
+	* @return {Boolean}		true/false based on whether the area is blocked or not
+	*/
 	is_visible_special: function(start, stop, shadow_array) {
 		var visible = true;
 		var halfway = false;
@@ -125,6 +171,15 @@ var jslos = {
 		return visible;
 	},
 
+	/**
+	* Checks if an area is Visible
+	* An area is invisible if both start and end is within the shadow
+	*
+	* @param {Double} start		The start of the area
+	* @param {Double} stop		The end of the area
+	* @param {Array} shadow_array	The shadow array object 
+	* @return {Boolean}		true/false based on whether the area is blocked or not
+	*/
 	is_visible: function(start, stop, shadow_array) {
 		var visible = true;
 		var i = 0;
@@ -137,6 +192,12 @@ var jslos = {
 		return visible;
 	},
 
+	/**
+	* Checks if an cell value is a BLOCKER
+	*
+	* @param {Object} value		The value of the cell to be checked
+	* @return {Boolean}		true/false based on whether the cell value is a BLOCKER or not
+	*/
 	is_blocking: function(value){
 		if ( value === this.BLOCKER ){
 			return true;
@@ -145,28 +206,73 @@ var jslos = {
 		}
 	},
 
+	/**
+	* Gets the start arch value of a cell based on index
+	*
+	* @param {Integer} cell		The index of the cell
+	* @param {Float} range		The range of each cell
+	* @return {Float}		start arch value
+	*/
 	get_start: function(cell, range){
 		return ((cell-1)*range)-(range/2);
 	},
 
+	/**
+	* Gets the end arch value of a cell based on index
+	*
+	* @param {Integer} cell		The index of the cell
+	* @param {Float} range		The range of each cell
+	* @return {Float}		end arch value
+	*/
 	get_stop: function(cell, range){
 		return (cell*range)-(range/2);
 	},
 
+	/**
+	* Position Class
+	* Create a position object base on row and col
+	*
+	* @param {Integer} row		The row of the position
+	* @param {Integer} col		The row of the position
+	* @return {Position}		Returns position class object 
+	* @constructor
+	*/
 	p: function(row,col){
 		return { row: row, col: col };
 	},
 
+	/**
+	* Returns the a position based on the index of the cell and which ring it's in
+	* The returned positon is absolute in the matrix. It's based on the starting position which
+	* is sent into method with startrow and starcol
+	*
+	* @param {Integer} cell		The index of the cell
+	* @param {Integer} ring		The index of the ring
+	* @param {Integer} startrow	The row of the central position
+	* @param {Integer} startcol	The col of the central position
+	* @return {Position}		end arch value
+	*/
 	get_cell_position: function(cell, ring, startrow, startcol){
 		var x = this.CELLPOSITIONS[ring+'-'+cell];
 		return this.p(startrow+x.row, startcol+x.col);
 	},
 
+	/**
+	* Returns the number of cells in the ring based on which ring index.
+	*
+	* @param {Integer} ring		The index of the ring
+	* @return {Integer}		The number of cells in the ring
+	*/
 	number_of_cells: function(ring){
 		return ring * 8;
 	},
 
-	load_cells: function(){
+	/**
+	* Returns an array with the pre-calculated cell positions relative to 
+	*
+	* @return {Array}		pre-calculated cell positions
+	*/
+	get_cell_positions: function(){
 
 		var arr = new Array();
 
@@ -297,10 +403,16 @@ var jslos = {
 
 		return arr;
 	},
-
+	
+	/* 
+	* @param {String} LOG	Used for debugging.
+	*/ 
 	LOG: "",
 
 }
 
-jslos.CELLPOSITIONS = jslos.load_cells();
+/* 
+*	Loas the cellpositions into an array 
+*/
+jslos.CELLPOSITIONS = jslos.get_cell_positions();
 
