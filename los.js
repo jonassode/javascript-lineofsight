@@ -1,5 +1,5 @@
 
-var LOS = {
+var jslos = {
 
 	VISIBLE: 1,
 	BLOCKED: 0,
@@ -302,5 +302,5 @@ var LOS = {
 
 }
 
-LOS.CELLPOSITIONS = LOS.load_cells();
+jslos.CELLPOSITIONS = jslos.load_cells();
 

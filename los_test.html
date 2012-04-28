@@ -11,19 +11,19 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<button onclick="move_player(LOS.p(-1,0));" >up</button>
+				<button onclick="move_player(jslos.p(-1,0));" >up</button>
 			</td>
 			<td>&nbsp;</td>
 		</tr>
                 <tr>
                         <td>
-                                <button onclick="move_player(LOS.p(0,-1));" >left</button>
+                                <button onclick="move_player(jslos.p(0,-1));" >left</button>
                         </td>
                         <td>
-                                <button onclick="move_player(LOS.p(1,0));" >down</button>
+                                <button onclick="move_player(jslos.p(1,0));" >down</button>
                         </td>
                         <td>
-                                <button onclick="move_player(LOS.p(0,1));" >right</button>
+                                <button onclick="move_player(jslos.p(0,1));" >right</button>
                         </td>
                 </tr>	
 	</table>
@@ -64,15 +64,15 @@
 		}
 
 		function draw_map(matrix, player){
-	                los = LOS.calculate_line_of_sight(matrix, player.row, player.col, 5);
+	                los = jslos.calculate_line_of_sight(matrix, player.row, player.col, 5);
         	        var text = "";
                 	for( row = 0; row < height; row++) {
                         	for( col = 0; col < width; col++) {
-					if ( los[row][col] === LOS.VISIBLE){
+					if ( los[row][col] === jslos.VISIBLE){
 						text = text + "<SPAN style='background-color:yellow'>";
 						text = text + matrix[row][col];
 						text = text + "</span>";
-					} else if (los[row][col] === LOS.BLOCKED){
+					} else if (los[row][col] === jslos.BLOCKED){
 						text = text + "<SPAN style='background-color:silver'>";
 						text = text + "&nbsp;"
 						text = text + "</span>";
@@ -88,7 +88,7 @@
 	                }
 
         	        document.getElementById('test_area').innerHTML = text;
-			document.getElementById('text_area').innerHTML = LOS.LOG;
+			//document.getElementById('text_area').innerHTML = jslos.LOG;
 
 		}
 		
@@ -97,7 +97,7 @@
 		var width = 20;
 		var height = 20;
 		var matrix = create_matrix(width, height);
-		LOS.BLOCKER = "#";
+		jslos.BLOCKER = "#";
 		
 		draw_map(matrix, player);
 	</script>
