@@ -32,7 +32,7 @@ var jslos = {
 		        for( row = 0; row < height; row++) {
 		                matrix[row] = new Array(width);
 				for ( col = 0; col < width; col++){
-					matrix[row][col] = null;
+					matrix[row][col] = {};
 				}
 		        }
 
