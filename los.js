@@ -1,6 +1,11 @@
 
 var LOS = {
 
+	VISIBLE: 1,
+	BLOCKED: 0,
+	EMPTY: 9,
+	BLOCKER: 8,
+
 	create_matrix: function(width, height) {
 
 		        var matrix = new Array(height);
@@ -9,10 +14,7 @@ var LOS = {
 		        for( row = 0; row < height; row++) {
 		                matrix[row] = new Array(width);
 				for ( col = 0; col < width; col++){
-					matrix[row][col] = '.';
-					if ( Math.floor((Math.random()*10)+1) > 7 ){
-						matrix[row][col] = '#';
-					}
+					matrix[row][col] = this.EMPTY;
 				}
 		        }
 
@@ -70,8 +72,8 @@ var LOS = {
 						}
 					}
 
-					this.LOG = this.LOG + "(" + ring + "," + cell + ")    " + start + " - " + stop + " visible:" + visible + " blocking: " + blocking + "<br/>";
-					this.LOG = this.LOG + shadow_array + "<br/><br/>";
+					//this.LOG = this.LOG + "(" + ring + "," + cell + ")    " + start + " - " + stop + " visible:" + visible + " blocking: " + blocking + "<br/>";
+					//this.LOG = this.LOG + shadow_array + "<br/><br/>";
 
 				}
 			}
@@ -136,7 +138,7 @@ var LOS = {
 	},
 
 	is_blocking: function(value){
-		if ( value === '#' ){
+		if ( value === this.BLOCKER ){
 			return true;
 		} else {
 			return false;
@@ -163,8 +165,6 @@ var LOS = {
 	number_of_cells: function(ring){
 		return ring * 8;
 	},
-
-
 
 	load_cells: function(){
 
