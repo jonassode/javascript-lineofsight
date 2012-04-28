@@ -6,9 +6,11 @@ var jslos = {
 	* 
 	* VISIBLE indicates that a tile is visible
 	* BLOCKED indicates that a tile is not visible
+	* CENTER indicates that a tile is the central point around which the calculation was done
 	*/ 
 	VISIBLE: 1,
 	BLOCKED: 0,
+	CENTER: 2,
 
 	/*
 	* Parameters for the input array
@@ -31,9 +33,6 @@ var jslos = {
 		        var col;
 		        for( row = 0; row < height; row++) {
 		                matrix[row] = new Array(width);
-				for ( col = 0; col < width; col++){
-					matrix[row][col] = {};
-				}
 		        }
 
 			return matrix;
@@ -49,7 +48,10 @@ var jslos = {
 	* @return {Array[Array]}   	Returns a matrix with the calculated line-of-sight.
 	*/
 	calculate_line_of_sight: function(matrix, row, col, rings){
+		// Create Return Matrix
 		var los_matrix = this.create_matrix(matrix.length, matrix[0].length);
+		// Set Central position
+		los_matrix[row][col] = this.CENTER;
 
 		// EMPTY LOG
 		this.LOG = "";

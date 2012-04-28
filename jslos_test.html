@@ -1,6 +1,6 @@
 <html>
 <head>
-	<script type='text/javascript' src='los.js' ></script>
+	<script type='text/javascript' src='jslos.js' ></script>
 
 </head>
 <body>
@@ -64,19 +64,19 @@
 		}
 
 		function draw_map(matrix, player){
-	                los = jslos.calculate_line_of_sight(matrix, player.row, player.col, 5);
+	                var losmatrix = jslos.calculate_line_of_sight(matrix, player.row, player.col, 5);
         	        var text = "";
-                	for( row = 0; row < height; row++) {
-                        	for( col = 0; col < width; col++) {
-					if ( los[row][col] === jslos.VISIBLE){
+                	for( row = 0; row < matrix.length; row++) {
+                        	for( col = 0; col < matrix[row].length; col++) {
+					if ( losmatrix[row][col] === jslos.VISIBLE){
 						text = text + "<SPAN style='background-color:yellow'>";
 						text = text + matrix[row][col];
 						text = text + "</span>";
-					} else if (los[row][col] === jslos.BLOCKED){
+					} else if (losmatrix[row][col] === jslos.BLOCKED){
 						text = text + "<SPAN style='background-color:silver'>";
 						text = text + "&nbsp;"
 						text = text + "</span>";
-					} else if (row === player.row && col === player.col){
+					} else if (losmatrix[row][col] === jslos.CENTER){
                                                 text = text + "<SPAN style='background-color:yellow'>";
 						text = text + "@"
                                                 text = text + "</span>";
