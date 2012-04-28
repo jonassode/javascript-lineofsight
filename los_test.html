@@ -68,11 +68,11 @@
         	        var text = "";
                 	for( row = 0; row < height; row++) {
                         	for( col = 0; col < width; col++) {
-					if ( los[row][col] === "1"){
+					if ( los[row][col] === LOS.VISIBLE){
 						text = text + "<SPAN style='background-color:yellow'>";
 						text = text + matrix[row][col];
 						text = text + "</span>";
-					} else if (los[row][col] === "0"){
+					} else if (los[row][col] === LOS.BLOCKED){
 						text = text + "<SPAN style='background-color:silver'>";
 						text = text + "&nbsp;"
 						text = text + "</span>";

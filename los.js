@@ -58,9 +58,9 @@ var LOS = {
 					blocking = this.is_blocking(matrix[p.row][p.col]);
 
 					if ( visible === false ) {
-						los_matrix[p.row][p.col] = "0";
+						los_matrix[p.row][p.col] = this.BLOCKED;
 					} else {
-						los_matrix[p.row][p.col] = "1";
+						los_matrix[p.row][p.col] = this.VISIBLE;
 					}
 
 					if ( blocking === true ){
