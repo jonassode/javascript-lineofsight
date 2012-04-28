@@ -5,7 +5,7 @@
 </head>
 <body>
 	<font face="Monospace">
-	<div id="test_area">a </div>
+	<div id="test_area" style="border: 3px silver solid; float:left;">a </div>
 
 	<table>
 		<tr>
@@ -29,7 +29,7 @@
 	</table>
 	
 	<br/>
-	<div id="text_area">b </div>
+	<div id="text_area">  </div>
 	</font>
 	<script>
 
@@ -58,12 +58,12 @@
 					matrix[player.row][player.col] = '.';
 					player.row = player.row + p.row;
 					player.col = player.col + p.col;
-					draw_map(matrix,player);
+					draw_map(matrix,player, "test_area", true);
 				}
 			}
 		}
 
-		function draw_map(matrix, player){
+		function draw_map(matrix, player, div_name, show_viewed){
 	                var losmatrix = jslos.calculate_line_of_sight(matrix, player.row, player.col, 5);
         	        var text = "";
                 	for( row = 0; row < matrix.length; row++) {
@@ -81,13 +81,17 @@
 						text = text + "@"
                                                 text = text + "</span>";
 					} else {
-						text = text + "-";
+						if ( jslos.viewed_tiles[row+ '-'+col] != undefined && show_viewed === true){
+							text = text + jslos.viewed_tiles[row+ '-'+col];
+						} else {
+							text = text + "&nbsp;";
+						}
 					}
 	                        }
         	                text = text + "<br>";
 	                }
 
-        	        document.getElementById('test_area').innerHTML = text;
+        	        document.getElementById(div_name).innerHTML = text;
 			//document.getElementById('text_area').innerHTML = jslos.LOG;
 
 		}
@@ -99,7 +103,7 @@
 		var matrix = create_matrix(width, height);
 		jslos.BLOCKER = "#";
 		
-		draw_map(matrix, player);
+		draw_map(matrix, player, "test_area", true);
 	</script>
 
 
