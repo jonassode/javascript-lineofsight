@@ -75,9 +75,9 @@ var jslos = {
 
 			for ( cell = 1; cell <= cells; cell++ ) {
 
-				p = this.get_cell_position(cell, ring, row, col);
+				pos = this.get_cell_position(cell, ring, this.p(row, col));
 
-				if ( p.row >= 0 && p.row < matrix.length && p.col >= 0 && p.col < matrix[0].length ){
+				if ( pos.row >= 0 && pos.row < matrix.length && pos.col >= 0 && pos.col < matrix[0].length ){
 
 					// Calculate Start and Stop Values for the cell
 					start = this.get_start(cell, range);
@@ -92,15 +92,15 @@ var jslos = {
 
 					// Mark cell as visible or blocked
 					if ( visible === false ) {
-						los_matrix[p.row][p.col] = this.BLOCKED;
+						los_matrix[pos.row][pos.col] = this.BLOCKED;
 					} else {
-						los_matrix[p.row][p.col] = this.VISIBLE;
-						this.viewed_tiles[p.row + '-'+ p.col] = matrix[p.row][p.col];
+						los_matrix[pos.row][pos.col] = this.VISIBLE;
+						this.viewed_tiles[pos.row + '-'+ pos.col] = matrix[pos.row][pos.col];
 					}
 
 					// Check if cell is blocking or not blocking
 					// Update shadow arch if it is
-					blocking = this.is_blocking(matrix[p.row][p.col]);
+					blocking = this.is_blocking(matrix[pos.row][pos.col]);
 					if ( blocking === true ){
 						if ( start < 0 ) {
 							this.update_arch(360+start,360,shadow_array);
@@ -269,15 +269,14 @@ var jslos = {
 	* The returned positon is absolute in the matrix. It's based on the starting position which
 	* is sent into method with startrow and starcol
 	*
-	* @param {Integer} cell		The index of the cell
-	* @param {Integer} ring		The index of the ring
-	* @param {Integer} startrow	The row of the central position
-	* @param {Integer} startcol	The col of the central position
-	* @return {Position}		end arch value
+	* @param {Integer} cell			The index of the cell
+	* @param {Integer} ring			The index of the ring
+	* @param {Position} start_position	The central position
+	* @return {Position}			end arch value
 	*/
-	get_cell_position: function(cell, ring, startrow, startcol){
+	get_cell_position: function(cell, ring, start_position){
 		var x = this.CELLPOSITIONS[ring+'-'+cell];
-		return this.p(startrow+x.row, startcol+x.col);
+		return this.p(start_position.row+x.row, start_position.col+x.col);
 	},
 
 	/**
