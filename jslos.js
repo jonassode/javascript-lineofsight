@@ -50,11 +50,11 @@ var jslos = {
 	* @param {Integer} rings	The number of rings that should be counted.
 	* @return {Array[Array]}   	Returns a matrix with the calculated line-of-sight.
 	*/
-	calculate_line_of_sight: function(matrix, row, col, rings){
+	calculate_line_of_sight: function(matrix, center, rings){
 		// Create Return Matrix
 		var los_matrix = this.create_matrix(matrix.length, matrix[0].length);
 		// Set Central position
-		los_matrix[row][col] = this.CENTER;
+		los_matrix[center.row][center.col] = this.CENTER;
 
 		// EMPTY LOG
 		this.LOG = "";
@@ -62,7 +62,7 @@ var jslos = {
 		// For each ring
 		var ring;
 		var cell;
-		var p;
+		var pos;
 		var start;
 		var stop;
 		var range;
@@ -75,7 +75,7 @@ var jslos = {
 
 			for ( cell = 1; cell <= cells; cell++ ) {
 
-				pos = this.get_cell_position(cell, ring, this.p(row, col));
+				pos = this.get_cell_position(cell, ring, center);
 
 				if ( pos.row >= 0 && pos.row < matrix.length && pos.col >= 0 && pos.col < matrix[0].length ){
 
