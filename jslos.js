@@ -294,134 +294,21 @@ var jslos = {
 	*
 	* @return {Array}		pre-calculated cell positions
 	*/
-	get_cell_positions: function(){
+	get_cell_positions: function(rings){
 
 		var arr = new Array();
 
-		arr['1-1'] = this.p(-1,0);
-		arr['1-2'] = this.p(-1,1);
-		arr['1-3'] = this.p(0,1);
-		arr['1-4'] = this.p(1,1);
-		arr['1-5'] = this.p(1,0);
-		arr['1-6'] = this.p(1,-1);
-		arr['1-7'] = this.p(0,-1);
-		arr['1-8'] = this.p(-1,-1);
+		var counter;
 
-		arr['2-1'] = this.p(-2,0);
-		arr['2-2'] = this.p(-2,1);
-		arr['2-3'] = this.p(-2,2);
-		arr['2-4'] = this.p(-1,2);
-		arr['2-5'] = this.p(0,2);
-		arr['2-6'] = this.p(1,2);
-		arr['2-7'] = this.p(2,2);
-		arr['2-8'] = this.p(2,1);
-		arr['2-9'] = this.p(2,0);
-		arr['2-10'] = this.p(2,-1);
-		arr['2-11'] = this.p(2,-2);
-		arr['2-12'] = this.p(1,-2);
-		arr['2-13'] = this.p(0,-2);
-		arr['2-14'] = this.p(-1,-2);
-		arr['2-15'] = this.p(-2,-2);
-		arr['2-16'] = this.p(-2,-1);
+		for(var ring=1; ring<=rings; ring++){
+			counter = 1;
 
-		arr['3-1'] = this.p(-3,0);
-		arr['3-2'] = this.p(-3,1);
-		arr['3-3'] = this.p(-3,2);
-		arr['3-4'] = this.p(-3,3);
-		arr['3-5'] = this.p(-2,3);
-		arr['3-6'] = this.p(-1,3);
-		arr['3-7'] = this.p(0,3);
-		arr['3-8'] = this.p(1,3);
-		arr['3-9'] = this.p(2,3);
-		arr['3-10'] = this.p(3,3);
-		arr['3-11'] = this.p(3,2);
-		arr['3-12'] = this.p(3,1);
-		arr['3-13'] = this.p(3,0);
-		arr['3-14'] = this.p( 3,-1);
-		arr['3-15'] = this.p( 3,-2);
-		arr['3-16'] = this.p( 3,-3);
-		arr['3-17'] = this.p( 2,-3);
-		arr['3-18'] = this.p( 1,-3);
-		arr['3-19'] = this.p( 0,-3);
-		arr['3-20'] = this.p(-1,-3);
-		arr['3-21'] = this.p(-2,-3);
-		arr['3-22'] = this.p(-3,-3);
-		arr['3-23'] = this.p(-3,-2);
-		arr['3-24'] = this.p(-3,-1);
-
-		arr['4-1'] = this.p(-4,0);
-		arr['4-2'] = this.p(-4,1);
-		arr['4-3'] = this.p(-4,2);
-		arr['4-4'] = this.p(-4,3);
-		arr['4-5'] = this.p(-4,4);
-		arr['4-6'] = this.p(-3,4);
-		arr['4-7'] = this.p(-2,4);
-		arr['4-8'] = this.p(-1,4);
-		arr['4-9'] = this.p(0,4);
-		arr['4-10'] = this.p(1,4);
-		arr['4-11'] = this.p(2,4);
-		arr['4-12'] = this.p(3,4);
-		arr['4-13'] = this.p(4,4);
-		arr['4-14'] = this.p( 4, 3);
-		arr['4-15'] = this.p( 4, 2);
-		arr['4-16'] = this.p( 4, 1);
-		arr['4-17'] = this.p( 4, 0);
-		arr['4-18'] = this.p( 4,-1);
-		arr['4-19'] = this.p( 4,-2);
-		arr['4-20'] = this.p( 4,-3);
-		arr['4-21'] = this.p( 4,-4);
-		arr['4-22'] = this.p( 3,-4);
-		arr['4-23'] = this.p( 2,-4);
-		arr['4-24'] = this.p( 1,-4);
-		arr['4-25'] = this.p( 0,-4);
-		arr['4-26'] = this.p(-1,-4);
-		arr['4-27'] = this.p(-2,-4);
-		arr['4-28'] = this.p(-3,-4);
-		arr['4-29'] = this.p(-4,-4);
-		arr['4-30'] = this.p(-4,-3);
-		arr['4-31'] = this.p(-4,-2);
-		arr['4-32'] = this.p(-4,-1);
-
-		arr['5-1']  = this.p(-5,0);
-		arr['5-2']  = this.p(-5,1);
-		arr['5-3']  = this.p(-5,2);
-		arr['5-4']  = this.p(-5,3);
-		arr['5-5']  = this.p(-5,4);
-		arr['5-6']  = this.p(-5,5);
-		arr['5-7']  = this.p(-4,5);
-		arr['5-8']  = this.p(-3,5);
-		arr['5-9']  = this.p(-2,5);
-		arr['5-10'] = this.p(-1,5);
-		arr['5-11'] = this.p( 0,5);
-		arr['5-12'] = this.p( 1,5);
-		arr['5-13'] = this.p( 2,5);
-		arr['5-14'] = this.p( 3,5);
-		arr['5-15'] = this.p( 4,5);
-		arr['5-16'] = this.p( 5,5);
-		arr['5-17'] = this.p( 5, 4);
-		arr['5-18'] = this.p( 5, 3);
-		arr['5-19'] = this.p( 5, 2);
-		arr['5-20'] = this.p( 5, 1);
-		arr['5-21'] = this.p( 5, 0);
-		arr['5-22'] = this.p( 5,-1);
-		arr['5-23'] = this.p( 5,-2);
-		arr['5-24'] = this.p( 5,-3);
-		arr['5-25'] = this.p( 5,-4);
-		arr['5-26'] = this.p( 5,-5);
-		arr['5-27'] = this.p( 4,-5);
-		arr['5-28'] = this.p( 3,-5);
-		arr['5-29'] = this.p( 2,-5);
-		arr['5-30'] = this.p( 1,-5);
-		arr['5-31'] = this.p( 0,-5);
-		arr['5-32'] = this.p(-1,-5);
-		arr['5-33'] = this.p(-2,-5);
-		arr['5-34'] = this.p(-3,-5);
-		arr['5-35'] = this.p(-4,-5);
-		arr['5-36'] = this.p(-5,-5);
-		arr['5-37'] = this.p(-5,-4);
-		arr['5-38'] = this.p(-5,-3);
-		arr['5-39'] = this.p(-5,-2);
-		arr['5-40'] = this.p(-5,-1);
+			for(var i=0;             i<=ring;      i++,counter++){ arr[ring+'-'+counter] = jslos.p(ring*-1,i); }
+			for(var i=((ring*-1)+1); i<=ring;     i++,counter++){ arr[ring+'-'+counter] = jslos.p(i,ring);}
+			for(var i=(ring-1);      i>=(ring*-1); i--,counter++){ arr[ring+'-'+counter] = jslos.p(ring,i); }
+			for(var i=(ring-1);      i>=(ring*-1); i--,counter++){ arr[ring+'-'+counter] = jslos.p(i,ring*-1); }
+			for(var i=((ring*-1)+1); i<=-1;        i++,counter++){ arr[ring+'-'+counter] = jslos.p(ring*-1,i); }
+		}
 
 		return arr;
 	},
@@ -436,5 +323,5 @@ var jslos = {
 /* 
 *	Loas the cellpositions into an array 
 */
-jslos.CELLPOSITIONS = jslos.get_cell_positions();
+jslos.CELLPOSITIONS = jslos.get_cell_positions(20);
 
