@@ -1,0 +1,91 @@
+<html>
+<head>
+	<script type='text/javascript' src='jslos.js' ></script>
+
+</head>
+<body>
+	<font face="Monospace">
+	<div id="test_area" style="border: 3px silver solid; float:left;">a </div>
+	</font>
+	<script>
+
+		function create_matrix(width, height) {
+
+				var matrix = new Array(height);
+				var row;
+				var col;
+				for( row = 0; row < height; row++) {
+				        matrix[row] = new Array(width);
+					for ( col = 0; col < width; col++){
+						matrix[row][col] = '.';
+						if ( Math.floor((Math.random()*10)+1) > 8 ){
+							matrix[row][col] = '#';
+						} else if ( Math.floor((Math.random()*10)+1) > 9 ) {
+							matrix[row][col] = '&';
+						}
+					}
+				}
+
+				return matrix;
+
+		}
+
+		function draw_map(matrix, player1, div_name, show_viewed){
+			jslos.reset_merged_tiles(matrix.length, matrix[0].length);
+
+	                jslos.calculate_line_of_sight(matrix, player1, 5);
+	                jslos.calculate_line_of_sight(matrix, player2, 5);
+	                jslos.calculate_line_of_sight(matrix, player3, 5);
+	                jslos.calculate_line_of_sight(matrix, player4, 5);
+
+			var losmatrix = jslos.merged_visible_tiles;
+
+        	        var text = "";
+                	for( row = 0; row < matrix.length; row++) {
+                        	for( col = 0; col < matrix[row].length; col++) {
+					if ( losmatrix[row][col] === jslos.VISIBLE){
+						text = text + "<SPAN style='background-color:yellow'>";
+						text = text + matrix[row][col];
+						text = text + "</span>";
+					} else if (losmatrix[row][col] === jslos.BLOCKED){
+						text = text + "<SPAN style='background-color:silver'>";
+						text = text + "&nbsp;"
+						text = text + "</span>";
+					} else if (losmatrix[row][col] === jslos.CENTER){
+                                                text = text + "<SPAN style='background-color:yellow'>";
+						text = text + "@"
+                                                text = text + "</span>";
+					} else {
+						if ( jslos.viewed_tiles[row+ '-'+col] != undefined && show_viewed === true){
+							text = text + jslos.viewed_tiles[row+ '-'+col];
+						} else {
+							text = text + "&nbsp;";
+						}
+					}
+	                        }
+        	                text = text + "<br>";
+	                }
+
+        	        document.getElementById(div_name).innerHTML = text;
+
+		}
+		
+		var player1 = { row:10, col:10 }
+		var player2 = { row:13, col:13 }
+		var player3 = { row:13, col:17 }
+		var player4 = { row:20, col:20 }
+
+		var width = 40;
+		var height = 40;
+		var matrix = create_matrix(width, height);
+		jslos.blocker_values.push("#");
+		jslos.blocker_values.push("&");
+		
+		draw_map(matrix, player1, "test_area", true);
+	</script>
+
+
+</body>
+<html>
+
+
