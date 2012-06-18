@@ -112,9 +112,13 @@ var jslos = {
 		var shadow_array = new Array();
 		var visible;
 
+		// Set Center as visible
 		los_matrix[center.row][center.col] = this.VISIBLE;
 		if ( this.merged_visible_tiles != undefined ){
 			this.merged_visible_tiles[center.row][center.col] = this.VISIBLE;
+		}
+		if ( this.viewed_tiles != undefined ){
+			this.viewed_tiles[center.row][center.col] = matrix[center.row][center.col];
 		}
 
 		for ( ring = 1; ring <= rings; ring++){
