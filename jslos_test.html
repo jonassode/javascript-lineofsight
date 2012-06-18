@@ -66,11 +66,15 @@
 		}
 
 		function draw_map(matrix, player, div_name, show_viewed){
-	                var losmatrix = jslos.calculate_line_of_sight(matrix, player, 10);
+	                var losmatrix = jslos.calculate_line_of_sight(matrix, player, 3);
         	        var text = "";
                 	for( row = 0; row < matrix.length; row++) {
                         	for( col = 0; col < matrix[row].length; col++) {
-					if ( losmatrix[row][col] === jslos.VISIBLE){
+					if (row == player.row && col == player.col ){
+                                                text = text + "<SPAN style='background-color:yellow'>";
+						text = text + "@"
+                                                text = text + "</span>";
+					} else if ( losmatrix[row][col] === jslos.VISIBLE){
 						text = text + "<SPAN style='background-color:yellow'>";
 						text = text + matrix[row][col];
 						text = text + "</span>";
@@ -78,13 +82,9 @@
 						text = text + "<SPAN style='background-color:silver'>";
 						text = text + "&nbsp;"
 						text = text + "</span>";
-					} else if (losmatrix[row][col] === jslos.CENTER){
-                                                text = text + "<SPAN style='background-color:yellow'>";
-						text = text + "@"
-                                                text = text + "</span>";
 					} else {
-						if ( jslos.viewed_tiles[row+ '-'+col] != undefined && show_viewed === true){
-							text = text + jslos.viewed_tiles[row+ '-'+col];
+						if ( jslos.viewed_tiles[row][col] != jslos.UNSEEN && show_viewed === true ){
+							text = text + jslos.viewed_tiles[row][col];
 						} else {
 							text = text + "&nbsp;";
 						}
@@ -103,6 +103,8 @@
 		var width = 40;
 		var height = 40;
 		var matrix = create_matrix(width, height);
+		jslos.reset_viewed_tiles(matrix.length, matrix[0].length);
+
 		jslos.blocker_values.push("#");
 		jslos.blocker_values.push("&");
 		
