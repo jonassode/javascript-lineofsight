@@ -113,6 +113,9 @@ var jslos = {
 		var visible;
 
 		los_matrix[center.row][center.col] = this.VISIBLE;
+		if ( this.merged_visible_tiles != undefined ){
+			this.merged_visible_tiles[center.row][center.col] = this.VISIBLE;
+		}
 
 		for ( ring = 1; ring <= rings; ring++){
 			var cells = this.number_of_cells(ring);
